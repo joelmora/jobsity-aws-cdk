@@ -18,7 +18,8 @@ class AppEc2Stack extends cdk.Stack {
 
     //s3 bucket with static files
     new s3.Bucket(this, "LnLEC2Bucket", {
-      bucketName: "lnl-ec2-bucket"
+      bucketName: "lnl-ec2-bucket",
+      removalPolicy: cdk.RemovalPolicy.DESTROY
     });
 
     // Default VPC
@@ -37,7 +38,8 @@ class AppEc2Stack extends cdk.Stack {
     //dynamo table
     new dynamodb.Table(this, "Table", {
       partitionKey: { name: "id", type: dynamodb.AttributeType.STRING },
-      tableName: 'LnLDynamoTable'
+      tableName: 'LnLDynamoTable',
+      removalPolicy: cdk.RemovalPolicy.DESTROY
     });
 
     // Open port 22 for SSH connection from anywhere

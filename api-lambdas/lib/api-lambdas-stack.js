@@ -16,7 +16,7 @@ class ApiLambdasStack extends cdk.Stack {
 
     // Create SSL Certificate
     const certificate = new certMng.Certificate(this, "ApiLambdaSSLCertificate", {
-      domainName: "*.jobsity-lnl.dns-cloud.net",
+      domainName: "api.jobsitylnl.cloudns.cl",
       validationMethod: certMng.ValidationMethod.DNS
     });
 
@@ -44,7 +44,7 @@ class ApiLambdasStack extends cdk.Stack {
 
     //Custom domain
     const apiDomain = new apigateway.DomainName(this, "LnLDomainName", {
-      domainName: "api.jobsity-lnl.dns-cloud.net",
+      domainName: "api.jobsitylnl.cloudns.cl",
       certificate,
       securityPolicy: apigateway.SecurityPolicy.TLS_1_0,
       endpointType: apigateway.EndpointType.EDGE

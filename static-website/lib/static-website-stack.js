@@ -15,15 +15,16 @@ class StaticWebsiteStack extends cdk.Stack {
 
     // Create SSL Certificate
     const certificate = new certMng.Certificate(this, "StaticWebsiteSSLCertificate", {
-      domainName: "jobsity-lnl.dns-cloud.net",
+      domainName: "jobsitylnl.cloudns.cl",
       validationMethod: certMng.ValidationMethod.DNS
     });
 
     //s3 bucket for frontend site
     const bucket = new s3.Bucket(this, "JobsityLnLBucket", {
-      bucketName: "jobsity-lnl.dns-cloud.net",
+      bucketName: "jobsitylnl.cloudns.cl",
       websiteIndexDocument: "index.html",
       publicReadAccess: true,
+      removalPolicy: cdk.RemovalPolicy.DESTROY
     });
 
     //CDN to server frontend
@@ -36,7 +37,7 @@ class StaticWebsiteStack extends cdk.Stack {
       ],
       priceClass: cloudfront.PriceClass.PRICE_CLASS_ALL,
       viewerCertificate: cloudfront.ViewerCertificate.fromAcmCertificate(certificate, {
-        aliases: ["jobsity-lnl.dns-cloud.net"]
+        aliases: ["jobsitylnl.cloudns.cl"]
       })
     });
   }

@@ -2,7 +2,7 @@ const { expect, matchTemplate, MatchStyle } = require("@aws-cdk/assert");
 const cdk = require("@aws-cdk/core");
 const StaticWebsite = require("../lib/static-website-stack");
 
-test("Empty Stack", () => {
+test("Stack Match CloudFormation template", () => {
   const app = new cdk.App();
   // WHEN
   const stack = new StaticWebsite.StaticWebsiteStack(app, "MyTestStack");
@@ -14,32 +14,33 @@ test("Empty Stack", () => {
           StaticWebsiteSSLCertificate8461C324: {
             Type: "AWS::CertificateManager::Certificate",
             Properties: {
-              DomainName: "jobsity-lnl.dns-cloud.net",
+              DomainName: "jobsitylnl.cloudns.cl",
               DomainValidationOptions: [
                 {
-                  DomainName: "jobsity-lnl.dns-cloud.net",
-                  ValidationDomain: "dns-cloud.net"
-                }
+                  DomainName: "jobsitylnl.cloudns.cl",
+                  ValidationDomain: "cloudns.cl",
+                },
               ],
-              ValidationMethod: "DNS"
-            }
+              ValidationMethod: "DNS",
+            },
           },
           JobsityLnLBucketA5F97B42: {
             Type: "AWS::S3::Bucket",
             Properties: {
-              BucketName: "jobsity-lnl.dns-cloud.net",
+              BucketName: "jobsitylnl.cloudns.cl",
               WebsiteConfiguration: {
-                IndexDocument: "index.html"
-              }
+                IndexDocument: "index.html",
+              },
             },
-            UpdateReplacePolicy: "Retain",
-            DeletionPolicy: "Retain"
+            UpdateReplacePolicy: "Delete",
+            DeletionPolicy: "Delete",
+
           },
           JobsityLnLBucketPolicy56BAECA1: {
             Type: "AWS::S3::BucketPolicy",
             Properties: {
               Bucket: {
-                Ref: "JobsityLnLBucketA5F97B42"
+                Ref: "JobsityLnLBucketA5F97B42",
               },
               PolicyDocument: {
                 Statement: [
@@ -52,35 +53,35 @@ test("Empty Stack", () => {
                         "",
                         [
                           {
-                            "Fn::GetAtt": ["JobsityLnLBucketA5F97B42", "Arn"]
+                            "Fn::GetAtt": ["JobsityLnLBucketA5F97B42", "Arn"],
                           },
-                          "/*"
-                        ]
-                      ]
-                    }
-                  }
+                          "/*",
+                        ],
+                      ],
+                    },
+                  },
                 ],
-                Version: "2012-10-17"
-              }
-            }
+                Version: "2012-10-17",
+              },
+            },
           },
           JobsityLnLCloudFrontCFDistribution4D3DF76E: {
             Type: "AWS::CloudFront::Distribution",
             Properties: {
               DistributionConfig: {
-                Aliases: ["jobsity-lnl.dns-cloud.net"],
+                Aliases: ["jobsitylnl.cloudns.cl"],
                 DefaultCacheBehavior: {
                   AllowedMethods: ["GET", "HEAD"],
                   CachedMethods: ["GET", "HEAD"],
                   Compress: true,
                   ForwardedValues: {
                     Cookies: {
-                      Forward: "none"
+                      Forward: "none",
                     },
-                    QueryString: false
+                    QueryString: false,
                   },
                   TargetOriginId: "origin1",
-                  ViewerProtocolPolicy: "redirect-to-https"
+                  ViewerProtocolPolicy: "redirect-to-https",
                 },
                 DefaultRootObject: "index.html",
                 Enabled: true,
@@ -89,23 +90,23 @@ test("Empty Stack", () => {
                 Origins: [
                   {
                     DomainName: {
-                      "Fn::GetAtt": ["JobsityLnLBucketA5F97B42", "RegionalDomainName"]
+                      "Fn::GetAtt": ["JobsityLnLBucketA5F97B42", "RegionalDomainName"],
                     },
                     Id: "origin1",
-                    S3OriginConfig: {}
-                  }
+                    S3OriginConfig: {},
+                  },
                 ],
                 PriceClass: "PriceClass_All",
                 ViewerCertificate: {
                   AcmCertificateArn: {
-                    Ref: "StaticWebsiteSSLCertificate8461C324"
+                    Ref: "StaticWebsiteSSLCertificate8461C324",
                   },
-                  SslSupportMethod: "sni-only"
-                }
-              }
-            }
-          }
-        }
+                  SslSupportMethod: "sni-only",
+                },
+              },
+            },
+          },
+        },
       },
       MatchStyle.EXACT
     )

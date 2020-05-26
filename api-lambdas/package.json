@@ -10,15 +10,15 @@
     "test": "jest"
   },
   "devDependencies": {
-    "@aws-cdk/assert": "1.31.0",
-    "aws-cdk": "1.31.0",
+    "@aws-cdk/assert": "1.41.0",
+    "aws-cdk": "1.41.0",
     "jest": "^24.9.0"
   },
   "dependencies": {
-    "@aws-cdk/core": "1.31.0",
-    "@aws-cdk/aws-lambda": "1.31.0",
-    "@aws-cdk/aws-apigateway": "1.31.0",
-    "@aws-cdk/aws-certificatemanager": "1.31.0",
+    "@aws-cdk/core": "1.41.0",
+    "@aws-cdk/aws-lambda": "1.41.0",
+    "@aws-cdk/aws-apigateway": "1.41.0",
+    "@aws-cdk/aws-certificatemanager": "1.41.0",
     "env-cmd": "^10.1.0"
   }
 }
